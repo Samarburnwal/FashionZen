@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './ListProduct.css';
 import crossicon from '../../assets/cross_icon.png'
 
+const URL = "https://fashionzen-backend.onrender.com";
+
 const ListProducts = () => {
 
   const [allproducts,setAllproducts] = useState([]);
@@ -15,7 +17,7 @@ const ListProducts = () => {
   },[]);
 
   const remove_product = async (id)=>{
-    await fetch('http://localhost:4000/removeproducts',{
+    await fetch(`${URL}/removeproducts`,{
         method:'Post',
         headers:{
             Accept:'application/json',

@@ -2,20 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './OrderRequest.css'; // Import the CSS file
 
+const URL = "https://fashionzen-backend.onrender.com";
+
 const statusOptions = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
 const OrderRequest = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/getAllOrders')
+    axios.get(`${URL}/getAllOrders`)
       .then(res => setOrders(res.data))
       .catch(err => console.error(err));
   }, []);
 
   const updateStatus = async (orderId, newStatus) => {
     try {
-      const res = await axios.put(`http://localhost:4000/${orderId}/status`, { status: newStatus });
+      const res = await axios.put(`${URL}/${orderId}/status`, { status: newStatus });
       setOrders(prev => prev.map(o => o._id === orderId ? res.data : o));
     } catch (err) {
       console.error('Status update failed', err);

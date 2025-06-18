@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Addproducts.css';
 import upload_image from '../../assets/upload_area.svg'
 
+const URL = "https://fashionzen-backend.onrender.com";
+
 const AddProducts = () => {
     const [image,setImage] = useState(false);
     const imageHandler = (e)=>{
@@ -29,7 +31,7 @@ const AddProducts = () => {
         let formData = new FormData();
         formData.append('product',image);
 
-        await fetch("http://localhost:4000/upload",{
+        await fetch(`${URL}/upload`,{
             method:'POST',
             headers:{
                 Accept:'application/json',
@@ -41,7 +43,7 @@ const AddProducts = () => {
             product.image = responseData.imageUrl;
             console.log(product);
             
-            await fetch("http://localhost:4000/addproducts",{
+            await fetch(`${URL}/addproducts`,{
                 method:"POST",
                 headers:{
                     Accept:'application/json',
