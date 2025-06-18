@@ -1,0 +1,165 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px;
+    box-shadow: 0 1px 3px -2px black;
+    cursor: pointer;
+  }
+  
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .nav-logo p {
+    color: #171717;
+    font-size: 38px;
+    font-weight: 600;
+  }
+  
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 50px;
+    color: #626262;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .nav-menu li {
+    cursor: pointer;
+  }
+  
+  .nav-menu hr {
+    border: none;
+    width: 80%;
+    height: 3px;
+    border-radius: 10px;
+    background: #ff4141;
+  }
+  
+  .nav-login-cart {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .nav-login-cart button {
+    width: 120px;
+    height: 44px;
+    outline: none;
+    border: 1px solid #7a7a7a;
+    border-radius: 75px;
+    color: #515151;
+    font-size: 16px;
+    font-weight: 500;
+    background: white;
+    cursor: pointer;
+  }
+  
+  .nav-login-cart button:active {
+    background: #f3f3f3;
+  }
+  
+  .nav-cart-count {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -35px;
+    margin-left: -20px;
+    border-radius: 11px;
+    font-size: 14px;
+    background: red;
+    color: white;
+  }
+  
+  /* Profile Icon Styling */
+  .nav-profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .nav-profile-icon:hover {
+    transform: scale(1.05);
+  }
+  /* Overlay Background */
+.nav-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+/* Search Box */
+.nav-search-box {
+  background: #fff;
+  padding: 12px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Input */
+.nav-search-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Submit Button */
+.nav-search-submit {
+  width: 15%;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.nav-search-submit:hover {
+  background-color: #005ecb;
+}
+
+/* Close Button */
+.nav-search-close {
+  width: 10%;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #777;
+  cursor: pointer;
+  padding: 4px;
+  margin-bottom: 7px;
+}
+
+/* Adjust this if needed */
+.nav-search-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+  
