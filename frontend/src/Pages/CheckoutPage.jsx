@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import './CSS/CheckoutPage.css';
 import {jwtDecode} from 'jwt-decode';
 import { ShopContext } from '../Contexts/ShopContext';
+const URL = 'https://fashionzen-backend.onrender.com'
 
 const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -67,7 +68,7 @@ const CheckoutPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/order-request', {
+      const response = await fetch(`${URL}/order-request`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

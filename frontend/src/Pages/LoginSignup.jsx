@@ -1,6 +1,8 @@
     import React, { useState } from 'react';
     import './CSS/LoginSignup.css';
 
+    const URL = "https://fashionzen-backend.onrender.com";
+
     const LoginSignup = () => {
 
     const [state,setState] = useState("Login");
@@ -17,7 +19,7 @@
     const login = async ()=>{
         console.log("Login Here",formData);
         let responseData;
-        await fetch('http://localhost:4000/login',{
+        await fetch(`${URL}/login`,{
             method:'POST',
             headers:{
                 Accept:'application/form-data',
@@ -38,7 +40,7 @@
     const signup = async ()=>{
         console.log("Signup Here",formData);
         let responseData;
-        await fetch('http://localhost:4000/signup',{
+        await fetch(`${URL}/signup`,{
             method:'POST',
             headers:{
                 Accept:'application/form-data',

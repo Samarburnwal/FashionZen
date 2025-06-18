@@ -1,8 +1,6 @@
 import { createContext, useState } from "react";
-// import all_products from '../Components/Assets/all_product';
 import { useEffect } from "react";
 import axios from "axios";
-
 
 export const ShopContext = createContext(null);
 
@@ -14,6 +12,8 @@ const getDefaultCart = ()=>{
     return cart;
 }
 
+const URL = "https://fashionzen-backend.onrender.com";
+
 const ShopContextProvider = (props)=>{
 
     const [cartItems,setCartItems] = useState(getDefaultCart());
@@ -21,12 +21,12 @@ const ShopContextProvider = (props)=>{
     const [user,setUser] = useState(null);
 
     useEffect(()=>{
-        fetch('http://localhost:4000/allproducts')
+        fetch(`${URL}/allproducts`)
         .then((response)=>response.json())
         .then((data)=>setAll_Products(data))
 
         if(localStorage.getItem('auth-token')){
-            fetch('http://localhost:4000/getcart',{
+            fetch(`${URL}/getcart`,{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -44,7 +44,7 @@ const ShopContextProvider = (props)=>{
             if(!token) return;
     
             try{
-                const res = await axios.get('http://localhost:4000/fetchUser',{
+                const res = await axios.get(`${URL}/fetchUser`,{
                     headers:{
                         'auth-token':token,
                     },
@@ -75,7 +75,7 @@ const ShopContextProvider = (props)=>{
     const addToCart = (itemId)=>{
         setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}));
         if(localStorage.getItem('auth-token')){
-            fetch('http://localhost:4000/addtocart',{
+            fetch(`${URL}/addtocart`,{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -93,7 +93,7 @@ const ShopContextProvider = (props)=>{
     const removeFromCart = (itemId)=>{
         setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
         if(localStorage.getItem('auth-token')){
-            fetch('http://localhost:4000/removefromcart',{
+            fetch(`${URL}/removefromcart`,{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -140,7 +140,7 @@ const ShopContextProvider = (props)=>{
 
     const getProductRequest = async (id)=>{
         try {
-            const productDetails = await axios.post('http://localhost:4000/get-product-requests',{id});
+            const productDetails = await axios.post(`${URL}/get-product-requests`,{id});
             //console.log(productDetails.data.product);
             
             return productDetails.data.product;
