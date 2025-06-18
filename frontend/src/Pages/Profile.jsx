@@ -6,6 +6,9 @@ import OrderCard from '../Components/OrderCard/OrderCard';
 const Profile = () => {
   const [selectedSection, setSelectedSection] = useState('overview');
   let user = localStorage.getItem("user");
+  const [newName, setNewName] = useState(user.name || '');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmDelete, setConfirmDelete] = useState(false);
   user = JSON.parse(user);
   
   const [orders, setOrders] = useState([]);
@@ -85,9 +88,7 @@ const Profile = () => {
         );
 
       case 'settings':
-        const [newName, setNewName] = useState(user.name || '');
-        const [newPassword, setNewPassword] = useState('');
-        const [confirmDelete, setConfirmDelete] = useState(false);
+        
 
         const token = user.token || localStorage.getItem("token");
 
