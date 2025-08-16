@@ -48,7 +48,7 @@ app.use('/images', express.static(path.join(__dirname, 'upload/images')));
 app.post('/upload',upload.single('product'),(req,res)=>{
     res.json({
         success:1,
-        imageUrl:`http://localhost:${port}/images/${req.file.filename}`
+        imageUrl:`https://fashionzen-backend.onrender.com/images/${req.file.filename}`
     });
 });
 
@@ -346,6 +346,34 @@ app.put('/:orderId/status', async (req, res) => {
   
     const order = await Order.findByIdAndUpdate(req.params.orderId, { status }, { new: true });
     res.json(order);
+});
+
+app.put('/fix-image-urls', async (req, res) => {
+  const oldBase = "http://localhost:4000";
+  const newBase = "https://fashionzen-backend.onrender.com";
+
+  try {
+    const result = await Product.updateMany(
+      { image: { $regex: oldBase } },
+      [
+        {
+          $set: {
+            image: {
+              $replaceOne: {
+                input: "$image",
+                find: oldBase,
+                replacement: newBase
+              }
+            }
+          }
+        }
+      ]
+    );
+    res.json({ success: true, result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
   
