@@ -11,6 +11,7 @@ const Product = () => {
   const {productId} = useParams(); //useParams is used to fetch the url data (/:productId ==> useParams() = productId);
   const product = all_products.find((e)=> e.id === Number(productId));
   
+  console.log(all_products);
   
   return (
     <div className='product'>
