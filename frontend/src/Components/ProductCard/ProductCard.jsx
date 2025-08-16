@@ -3,6 +3,8 @@ import './ProductCard.css';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
+  console.log(product);
+  
   return (
     <div className="product-card">
       <Link to={`/product/${product.id}`} className="product-link">
