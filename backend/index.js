@@ -208,7 +208,7 @@ app.post('/login',async (req,res)=>{
                     id:user.id
                 }
             }
-            const token = jwt.sign(data,'secret_ecom');
+            const token = jwt.sign(data,'secret_ecom',{expiresIn: '7d'});
             res.json({success:true,token});
         }else{
             res.json({success:false,errors:"Wrong Password"})
@@ -347,35 +347,6 @@ app.put('/:orderId/status', async (req, res) => {
     const order = await Order.findByIdAndUpdate(req.params.orderId, { status }, { new: true });
     res.json(order);
 });
-
-app.put('/fix-image-urls', async (req, res) => {
-  const oldBase = "http://localhost:4000";
-  const newBase = "https://fashionzen-backend.onrender.com";
-
-  try {
-    const result = await Product.updateMany(
-      { image: { $regex: oldBase } },
-      [
-        {
-          $set: {
-            image: {
-              $replaceOne: {
-                input: "$image",
-                find: oldBase,
-                replacement: newBase
-              }
-            }
-          }
-        }
-      ]
-    );
-    res.json({ success: true, result });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
   
 app.listen(port,(error)=>{
     if(!error){
