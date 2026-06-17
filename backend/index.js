@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require("path");
+const Redis = require("ioredis");
+const redis = new Redis(process.env.REDIS_URL);
+
+redis.on("connect", () => console.log("Redis connected"));
+redis.on("error", (err) => console.log("Redis error:", err));
 
 const Order = require('./models/Orders');
 
@@ -109,6 +114,9 @@ app.post('/addproducts',async (req,res)=>{
     });
     console.log(product);
     await product.save();
+    await redis.del("popular_in_women");
+    await redis.del("new_collections");
+    console.log("Cache cleared after product update");
     console.log("Saved");
     res.json({
         success:true,
@@ -252,20 +260,60 @@ app.get('/fetchUser',fetchUser,async (req,res)=>{
 })
 //creating endpoint for newcollection data
 
-app.get('/newcollections',async (req,res)=>{
+app.get('/newcollections', async (req, res) => {
+  const CACHE_KEY = "new_collections";
+
+  try {
+    // Step 1: Check Redis first
+    const cached = await redis.get(CACHE_KEY);
+    if (cached) {
+      console.log("New collections served from cache");
+      return res.send(JSON.parse(cached));
+    }
+
+    // Step 2: Cache miss — fetch from MongoDB
     let products = await Product.find({});
     let newCollec = products.slice(1).slice(-8);
-    console.log('new collections fetched');
+
+    // Step 3: Store in Redis for 5 minutes
+    await redis.setex(CACHE_KEY, 300, JSON.stringify(newCollec));
+
+    console.log("New collections fetched from DB and cached");
     res.send(newCollec);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 });
 
 // creating endpoint for popular in women section
-app.get('/popularinwomen',async(req,res)=>{
-    let products = await Product.find({category:'women'});
-    let popular_in_women = products.slice(0,4);
-    console.log("Popular in women fetched");
+app.get('/popularinwomen', async (req, res) => {
+  const CACHE_KEY = "popular_in_women";
+
+  try {
+    // Step 1: Check if data exists in Redis cache
+    const cached = await redis.get(CACHE_KEY);
+    if (cached) {
+      console.log("Popular in women served from cache");
+      return res.send(JSON.parse(cached));
+    }
+
+    // Step 2: Cache miss — fetch from MongoDB
+    let products = await Product.find({ category: 'women' });
+    let popular_in_women = products.slice(0, 4);
+
+    // Step 3: Store in Redis for 5 minutes (300 seconds)
+    await redis.setex(CACHE_KEY, 300, JSON.stringify(popular_in_women));
+
+    console.log("Popular in women fetched from DB and cached");
     res.send(popular_in_women);
-})
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 
 // creating endpoint for adding to cart
 
