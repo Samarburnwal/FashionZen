@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Addproducts.css';
 import upload_image from '../../assets/upload_area.svg'
 
-const URL = "https://fashionzen-backend.onrender.com";
+const BackendURL = process.env.BackendURL;
 
 const AddProducts = () => {
     const [image,setImage] = useState(false);
@@ -31,7 +31,7 @@ const AddProducts = () => {
         let formData = new FormData();
         formData.append('product',image);
 
-        await fetch(`${URL}/upload`,{
+        await fetch(`${BackendURL}/upload`,{
             method:'POST',
             headers:{
                 Accept:'application/json',
@@ -43,7 +43,7 @@ const AddProducts = () => {
             product.image = responseData.imageUrl;
             console.log(product);
             
-            await fetch(`${URL}/addproducts`,{
+            await fetch(`${BackendURL}/addproducts`,{
                 method:"POST",
                 headers:{
                     Accept:'application/json',
@@ -84,7 +84,11 @@ const AddProducts = () => {
         </div>
         <div className="addproduct-itemfield">
             <label htmlFor="file-input">
-                <img src={image?URL.createObjectURL(image):upload_image} alt="" className='addproduct-thumbnail-img'/>
+                <img
+                src={image ? URL.createObjectURL(image) : upload_image}
+                alt=""
+                className='addproduct-thumbnail-img'
+                />
             </label>
             <input onChange={imageHandler} type="file" name='image' id='file-input' hidden/>
         </div>

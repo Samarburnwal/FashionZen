@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './OrderRequest.css'; // Import the CSS file
 
-const URL = "https://fashionzen-backend.onrender.com";
+const URL = process.env.BackendURL;
 
 const statusOptions = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './ListProduct.css';
 import crossicon from '../../assets/cross_icon.png'
 
-const URL = "https://fashionzen-backend.onrender.com";
+const URL = process.env.BackendURL;
 
 const ListProducts = () => {
 
   const [allproducts,setAllproducts] = useState([]);
 
   const fetchInfo = async ()=>{
-    await fetch('http://localhost:4000/allproducts').then((res)=>res.json()).then((data)=>{setAllproducts(data)});
+    await fetch(`${URL}/allproducts`).then((res)=>res.json()).then((data)=>{setAllproducts(data)});
   }
 
   useEffect(()=>{
